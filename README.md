@@ -5,7 +5,7 @@
 A step by step guide that will tell you how to get the development environment up and running.
 
 ```
-$ First step
+php artisan migrate:fresh --seed --seeder=PermissionsDemoSeeder
 $ Another step
 $ Final step
 ```
@@ -15,8 +15,8 @@ $ Final step
 A few examples of useful commands and/or tasks.
 
 ```
-$ First example
-$ Second example
+php artisan permission:show
+php artisan permission:create-role role_name
 $ And keep this in mind
 ```
 
