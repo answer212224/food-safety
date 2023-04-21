@@ -9,7 +9,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200">
-
                     <div class="mt-4 overflow-x-auto">
                         <table class="table-auto w-full">
                             <thead>
@@ -35,19 +34,17 @@
                                             @foreach ($user->roles as $role)
                                                 {{ $role->name }}
                                             @endforeach
+                                        </td>
                                         <td class="px-4 py-3 whitespace-nowrap dark:text-gray-200">
-
                                             @if ($user->getRoleNames()->first() == 'user')
                                                 <form action="{{ route('users.destroy', $user) }}" method="POST"
                                                     class="inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">{{ __('Delete') }}</button>
+                                                        class="text-red-600 hover:text-red-900">{{ __('Delete') }}</button>
                                                 </form>
                                             @endif
-
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -56,6 +53,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
