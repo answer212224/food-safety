@@ -28,20 +28,23 @@ Additional notes on how to deploy this on a live or release system. Explaining t
 
 ### Server
 
-* Live:
-* Release:
-* Development:
-
-### Branches
-
-* Master:
-* Feature:
-* Bugfix:
-* etc...
+* PHP >= 8.1
+* Ctype PHP Extension
+* cURL PHP Extension
+* DOM PHP Extension
+* Fileinfo PHP Extension
+* Filter PHP Extension
+* Hash PHP Extension
+* Mbstring PHP Extension
+* OpenSSL PHP Extension
+* PCRE PHP Extension
+* PDO PHP Extension
+* Session PHP Extension
+* Tokenizer PHP Extension
+* XML PHP Extension* 
 
 ## Additional Documentation and Acknowledgments
 
-* Project folder on server:
-* Confluence link:
-* Asana board:
-* etc...
+- [laravel-permission](https://spatie.be/docs/laravel-permission/v5/introduction)
+- [tailwindcss](https://tailwindcss.com/)
+
