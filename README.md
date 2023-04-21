@@ -5,9 +5,11 @@
 A step by step guide that will tell you how to get the development environment up and running.
 
 ```
+composer install
+composer run-script post-root-package-install
+php artisan key:generate
+npm install & npm run dev
 php artisan migrate:fresh --seed --seeder=PermissionsDemoSeeder
-$ Another step
-$ Final step
 ```
 
 ## Usage
