@@ -33,16 +33,8 @@ php artisan permission:assign-permission-to-role permission_name role_name
 php artisan permission:assign-role-to-user role_name user_name
 ```
 ```php
-php artisan make:filament-resource Customer
-php artisan make:filament-resource Customer --simple
-php artisan make:filament-resource Customer --simple --model
-php artisan make:filament-resource Customer --simple --model --migration
-php artisan make:filament-resource Customer --simple --model --migration --factory
-php artisan make:filament-resource Customer --simple --model --migration --factory --seeder
-php artisan make:filament-resource Customer --simple --model --migration --factory --seeder --controller
-php artisan make:filament-resource Customer --simple --model --migration --factory --seeder --controller --route
-php artisan make:filament-resource Customer --simple --model --migration --factory --seeder --controller --route --view
-php artisan make:filament-resource Customer --simple --model --migration --factory --seeder --controller --route --view --all
+php artisan make:filament-resource ModelName --simple
+php artisan make:filament-resource ModelName
 ```
 
 ```php
