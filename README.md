@@ -9,7 +9,7 @@ composer install
 composer run-script post-root-package-install
 php artisan key:generate
 npm install & npm run dev
-php artisan migrate:fresh --seed --seeder=PermissionsDemoSeeder
+php artisan migrate:fresh --seed
 ```
 
 ## Usage
@@ -22,9 +22,9 @@ php artisan permission:create-role role_name
 $ And keep this in mind
 ```
 
-## Deployment
+## EER
 
-Additional notes on how to deploy this on a live or release system. Explaining the most important branches, what pipelines they trigger and how to update the database (if anything special).
+![eer](https://i.imgur.com/GJEtU09.jpg)
 
 ### Server
 
