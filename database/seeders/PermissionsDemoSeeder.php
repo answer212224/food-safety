@@ -42,9 +42,11 @@ class PermissionsDemoSeeder extends Seeder
         Permission::create(['name' => 'update: tasks']);
         Permission::create(['name' => 'delete: tasks']);
 
-        // Create Auditor Role
-        $auditor = Role::create(['name' => 'auditor']);
-        $auditor->givePermissionTo('read: tasks');
+        // Create Super-Admin Role
+        // gets all permissions via Gate::before rule; see AuthServiceProvider
+        $superAdmin = Role::create(['name' => 'super-admin']);
+
+        $superAdmin->givePermissionTo(Permission::all());
 
         // Create Admin Role
         $admin = Role::create(['name' => 'admin']);
@@ -59,9 +61,9 @@ class PermissionsDemoSeeder extends Seeder
             'delete: tasks',
         ]);
 
-        // Create Super-Admin Role
-        // gets all permissions via Gate::before rule; see AuthServiceProvider
-        $superAdmin = Role::create(['name' => 'super-admin']);
+        // Create Auditor Role
+        $auditor = Role::create(['name' => 'auditor']);
+        $auditor->givePermissionTo('read: tasks');
 
         // Create Users and Assign Roles
         $user = \App\Models\User::factory()->create([

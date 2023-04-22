@@ -35,6 +35,7 @@ php artisan permission:assign-role-to-user role_name user_name
 ```php
 php artisan make:filament-resource ModelName --simple
 php artisan make:filament-resource ModelName
+php artisan make:filament-relation-manager RoleResource permissions name
 ```
 
 ```php
