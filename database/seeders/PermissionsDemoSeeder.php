@@ -18,51 +18,68 @@ class PermissionsDemoSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        Permission::create(['name' => 'assign tasks']);
-        Permission::create(['name' => 'unassign tasks']);
-        Permission::create(['name' => 'perform tasks']);
-        Permission::create(['name' => 'edit tasks']);
-        Permission::create(['name' => 'delete tasks']);
-        Permission::create(['name' => 'view own tasks']);
-        Permission::create(['name' => 'view all tasks']);
-        Permission::create(['name' => 'edit roles']);
-        Permission::create(['name' => 'edit permissions']);
-        Permission::create(['name' => 'view all users']);
+        // User Model
+        Permission::create(['name' => 'create: users']);
+        Permission::create(['name' => 'read: users']);
+        Permission::create(['name' => 'update: users']);
+        Permission::create(['name' => 'delete: users']);
 
-        // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'user']);
-        $role1->givePermissionTo('view own tasks');
-        $role1->givePermissionTo('perform tasks');
+        // Role Model
+        Permission::create(['name' => 'create: roles']);
+        Permission::create(['name' => 'read: roles']);
+        Permission::create(['name' => 'update: roles']);
+        Permission::create(['name' => 'delete: roles']);
 
-        $role2 = Role::create(['name' => 'admin']);
-        $role2->givePermissionTo('assign tasks');
-        $role2->givePermissionTo('unassign tasks');
-        $role2->givePermissionTo('edit tasks');
-        $role2->givePermissionTo('delete tasks');
-        $role2->givePermissionTo('view all users');
+        // Permission Model
+        Permission::create(['name' => 'create: permissions']);
+        Permission::create(['name' => 'read: permissions']);
+        Permission::create(['name' => 'update: permissions']);
+        Permission::create(['name' => 'delete: permissions']);
 
+        // Task Model
+        Permission::create(['name' => 'create: tasks']);
+        Permission::create(['name' => 'read: tasks']);
+        Permission::create(['name' => 'update: tasks']);
+        Permission::create(['name' => 'delete: tasks']);
 
-        $role3 = Role::create(['name' => 'Super-Admin']);
-        // gets all permissions via Gate::before rule; see AuthServiceProvider
+        // Create Auditor Role
+        $auditor = Role::create(['name' => 'auditor']);
+        $auditor->givePermissionTo('read: tasks');
 
-        // create demo users
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Example User',
-            'email' => 'user@example.com',
+        // Create Admin Role
+        $admin = Role::create(['name' => 'admin']);
+        $admin->givePermissionTo([
+            'create: users',
+            'read: users',
+            'update: users',
+            'delete: users',
+            'create: tasks',
+            'read: tasks',
+            'update: tasks',
+            'delete: tasks',
         ]);
-        $user->assignRole($role1);
+
+        // Create Super-Admin Role
+        // gets all permissions via Gate::before rule; see AuthServiceProvider
+        $superAdmin = Role::create(['name' => 'super-admin']);
+
+        // Create Users and Assign Roles
+        $user = \App\Models\User::factory()->create([
+            'name' => 'auditor',
+            'email' => 'auditor@example.com',
+        ]);
+        $user->assignRole($auditor);
 
         $user = \App\Models\User::factory()->create([
-            'name' => 'Example Admin User',
+            'name' => 'admin',
             'email' => 'admin@example.com',
         ]);
-        $user->assignRole($role2);
+        $user->assignRole($admin);
 
         $user = \App\Models\User::factory()->create([
-            'name' => 'Example Super-Admin User',
-            'email' => 'superadmin@example.com',
+            'name' => 'super-admin',
+            'email' => 'super-admin@example.com',
         ]);
-        $user->assignRole($role3);
+        $user->assignRole($superAdmin);
     }
 }

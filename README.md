@@ -12,14 +12,41 @@ npm install & npm run dev
 php artisan migrate:fresh --seed
 ```
 
+## Account
+- super-admin
+    - email: super-admin@example.com
+    - password: 123
+- admin
+    - email: admin@example.com
+    - password: 123
+- auditor
+    - email: auditor@example.com
+    - password: 123
+
 ## Usage
 
-A few examples of useful commands and/or tasks.
-
-```
+```php
 php artisan permission:show
 php artisan permission:create-role role_name
-$ And keep this in mind
+php artisan permission:create-permission permission_name
+php artisan permission:assign-permission-to-role permission_name role_name
+php artisan permission:assign-role-to-user role_name user_name
+```
+```php
+php artisan make:filament-resource Customer
+php artisan make:filament-resource Customer --simple
+php artisan make:filament-resource Customer --simple --model
+php artisan make:filament-resource Customer --simple --model --migration
+php artisan make:filament-resource Customer --simple --model --migration --factory
+php artisan make:filament-resource Customer --simple --model --migration --factory --seeder
+php artisan make:filament-resource Customer --simple --model --migration --factory --seeder --controller
+php artisan make:filament-resource Customer --simple --model --migration --factory --seeder --controller --route
+php artisan make:filament-resource Customer --simple --model --migration --factory --seeder --controller --route --view
+php artisan make:filament-resource Customer --simple --model --migration --factory --seeder --controller --route --view --all
+```
+
+```php
+
 ```
 
 ## EER
