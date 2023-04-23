@@ -21,7 +21,8 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationGroup = '權限管理';
+    protected static ?string $navigationGroup = '使用者管理';
+
     protected static ?string $label = '角色';
 
     protected static ?string $navigationIcon = 'heroicon-s-user-group';
