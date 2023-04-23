@@ -44,7 +44,7 @@ class RoleResource extends Resource
             ->columns([
                 TextColumn::make('id')->sortable(),
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('created_at')->datetime('Y-m-d')->searchable()->sortable(),
+                TextColumn::make('created_at')->datetime()->searchable()->sortable(),
             ])
             ->filters([
                 //
@@ -69,8 +69,6 @@ class RoleResource extends Resource
     {
         return [
             'index' => Pages\ListRoles::route('/'),
-            'create' => Pages\CreateRole::route('/create'),
-            'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
     }
 }
