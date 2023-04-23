@@ -49,6 +49,7 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
+    // 有角色才能登入到 Filament
     public function canAccessFilament(): bool
     {
         return $this->hasRole(Role::all());

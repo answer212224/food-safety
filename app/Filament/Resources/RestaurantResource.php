@@ -2,20 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RestaurantResource\Pages;
-use App\Filament\Resources\RestaurantResource\RelationManagers;
-use App\Models\Restaurant;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
+use App\Models\Restaurant;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\RestaurantResource\Pages;
+use App\Filament\Resources\RestaurantResource\RelationManagers;
 
 class RestaurantResource extends Resource
 {
     protected static ?string $model = Restaurant::class;
+
+    protected static ?string $label = '餐廳';
 
     protected static ?string $navigationIcon = 'heroicon-o-map';
 
@@ -53,6 +56,7 @@ class RestaurantResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

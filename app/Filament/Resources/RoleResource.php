@@ -7,27 +7,24 @@ use Filament\Tables;
 
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Spatie\Permission\Models\Role;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\RoleResource\Pages;
 use App\Filament\Resources\RoleResource\RelationManagers\PermissionsRelationManager;
-use Filament\Forms\Components\Select;
 
 class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationGroup = '使用者管理';
-
     protected static ?string $label = '角色';
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-
-
 
     public static function form(Form $form): Form
     {
@@ -43,9 +40,17 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->sortable(),
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('created_at')->datetime()->searchable()->sortable(),
+                TextColumn::make('id')
+                    ->sortable(),
+                TextColumn::make('name')
+                    ->label('角色名稱')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->label('建立時間')
+                    ->date()
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -59,15 +64,11 @@ class RoleResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            PermissionsRelationManager::class,
-        ];
-    }
+
 
     public static function getPages(): array
     {
+
         return [
             'index' => Pages\ListRoles::route('/'),
         ];
