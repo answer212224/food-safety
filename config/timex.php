@@ -1,7 +1,6 @@
 <?php
 
 use Carbon\Carbon;
-use App\Filament\Resources\Buildix\EventResource;
 
 return [
     /*
@@ -62,7 +61,7 @@ return [
     */
 
     'pages' => [
-        'timex' => EventResource::class,
+        'timex' => \Buildix\Timex\Pages\Timex::class,
         'slug' => 'timex',
         'group' => 'timex',
         'sort' => 0,
