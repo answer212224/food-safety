@@ -25,7 +25,7 @@ class RoleResource extends Resource
 
     protected static ?string $label = '角色';
 
-    protected static ?string $navigationIcon = 'heroicon-s-user-group';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
 
 

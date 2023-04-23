@@ -27,7 +27,7 @@ class UserResource extends Resource
 
     protected static ?string $label = '使用者';
 
-    protected static ?string $navigationIcon = 'heroicon-s-user';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     public static function form(Form $form): Form
     {
@@ -59,7 +59,7 @@ class UserResource extends Resource
                     ),
                 Forms\Components\CheckboxList::make('roles')
                     ->label('角色')
-                    ->relationship('roles', 'name'),
+                    ->relationship('roles', 'name', fn (Builder $query) => $query->whereNot('name', 'super-admin')),
                 Forms\Components\TextInput::make('no')
                     ->label('員工編號')
                     ->maxLength(191)
@@ -101,13 +101,6 @@ class UserResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            RolesRelationManager::class,
-        ];
     }
 
     public static function getPages(): array
