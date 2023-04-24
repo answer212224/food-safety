@@ -26,6 +26,10 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('uid')
+                    ->label('員工編號')
+                    ->maxLength(191)
+                    ->unique(),
                 Forms\Components\TextInput::make('name')
                     ->label('姓名')
                     ->required()
@@ -36,10 +40,6 @@ class UserResource extends Resource
                     ->unique()
                     ->required()
                     ->maxLength(191),
-                Forms\Components\TextInput::make('no')
-                    ->label('員工編號')
-                    ->maxLength(191)
-                    ->unique(),
                 Forms\Components\TextInput::make('department')
                     ->label('部門')
                     ->maxLength(191),
@@ -53,15 +53,16 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('uid')
+                    ->label('員工編號')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('姓名')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->label('電子郵件')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('no')
-                    ->label('員工編號')
-                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('department')
                     ->label('部門')
                     ->searchable(),
