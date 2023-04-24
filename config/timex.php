@@ -1,5 +1,7 @@
 <?php
 
+use App\Filament\Pages\Calendars;
+use App\Filament\Resources\TaskResource;
 use Carbon\Carbon;
 
 return [
@@ -61,7 +63,7 @@ return [
     */
 
     'pages' => [
-        'timex' => \Buildix\Timex\Pages\Timex::class,
+        'timex' => Calendars::class,
         'slug' => 'timex',
         'group' => 'timex',
         'sort' => 0,
@@ -145,7 +147,7 @@ return [
     ],
 
     'resources' => [
-        'event' => \Buildix\Timex\Resources\EventResource::class,
+        'event' => TaskResource::class,
         'sort' => 1,
         'icon' => 'heroicon-o-calendar',
         'slug' => 'timex-events',
@@ -206,10 +208,10 @@ return [
         |--------------------------------------------------------------------------
         */
         'labels' => [
-            'primary' => 'Primary category',
-            'secondary' => 'Secondary category',
-            'danger' => 'Danger category',
-            'success' => 'Success category',
+            'primary' => '食安及S5',
+            'secondary' => '清潔檢查',
+            'danger' => '餐點採樣',
+            'success' => '專案執行',
         ],
         'icons' => [
             'primary' => 'heroicon-o-clipboard',
