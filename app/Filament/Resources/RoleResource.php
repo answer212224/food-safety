@@ -16,7 +16,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\RoleResource\Pages;
+use App\Filament\Resources\RoleResource\Widgets\CalendarWidget;
 use App\Filament\Resources\RoleResource\RelationManagers\PermissionsRelationManager;
+
 
 class RoleResource extends Resource
 {
@@ -64,8 +66,12 @@ class RoleResource extends Resource
             ]);
     }
 
-
-
+    public static function getWidgets(): array
+    {
+        return [
+            CalendarWidget::class,
+        ];
+    }
     public static function getPages(): array
     {
 
