@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('defects', function (Blueprint $table) {
+        Schema::create('task_defects', function (Blueprint $table) {
             $table->id();
-            $table->string('category');
-            $table->string('title');
-            $table->string('description');
-            $table->integer('standard_score');
+            $table->foreignId('task_id');
+            $table->foreignId('defect_id');
+            $table->json('images')->nullable();
+            $table->integer('score')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('defects');
+        Schema::dropIfExists('task_defects');
     }
 };

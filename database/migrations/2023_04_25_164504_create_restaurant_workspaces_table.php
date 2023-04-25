@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('defects', function (Blueprint $table) {
+        Schema::create('restaurant_workspaces', function (Blueprint $table) {
             $table->id();
-            $table->string('category');
-            $table->string('title');
-            $table->string('description');
-            $table->integer('standard_score');
+            $table->foreignId('restaurant_id');
+            $table->string('area');
+            $table->string('chef');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('defects');
+        Schema::dropIfExists('restaurant_workspaces');
     }
 };
