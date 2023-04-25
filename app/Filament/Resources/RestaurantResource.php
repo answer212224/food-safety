@@ -6,6 +6,7 @@ use App\Filament\Resources\RestaurantResource\Pages;
 use App\Filament\Resources\RestaurantResource\RelationManagers;
 use App\Models\Restaurant;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RestaurantResource extends Resource
 {
+    protected static ?string $label = '餐廳';
+
     protected static ?string $model = Restaurant::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -23,18 +26,20 @@ class RestaurantResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sid')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('brand')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('shop')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('address')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('location')
-                    ->maxLength(255),
+                Card::make()->schema([
+                    Forms\Components\TextInput::make('sid')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('brand')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('shop')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('address')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('location')
+                        ->maxLength(255),
+                ])
             ]);
     }
 
@@ -48,9 +53,7 @@ class RestaurantResource extends Resource
                 Tables\Columns\TextColumn::make('address'),
                 Tables\Columns\TextColumn::make('location'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                    ->date(),
             ])
             ->filters([
                 //
@@ -62,14 +65,14 @@ class RestaurantResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\RestaurantWorkspacesRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -77,5 +80,5 @@ class RestaurantResource extends Resource
             'create' => Pages\CreateRestaurant::route('/create'),
             'edit' => Pages\EditRestaurant::route('/{record}/edit'),
         ];
-    }    
+    }
 }

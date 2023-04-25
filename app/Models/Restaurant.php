@@ -15,4 +15,9 @@ class Restaurant extends Model
         'address',
         'location',
     ];
+
+    public function restaurant_workspaces()
+    {
+        return $this->hasMany(RestaurantWorkspace::class);
+    }
 }

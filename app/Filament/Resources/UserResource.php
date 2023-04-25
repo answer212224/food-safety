@@ -28,8 +28,9 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('uid')
                     ->label('員工編號')
+                    ->required()
                     ->maxLength(191)
-                    ->unique(),
+                    ->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('name')
                     ->label('姓名')
                     ->required()
@@ -37,8 +38,6 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->label('電子郵件')
-                    ->unique()
-                    ->required()
                     ->maxLength(191),
                 Forms\Components\TextInput::make('department')
                     ->label('部門')
@@ -62,7 +61,6 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->label('電子郵件')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('department')
                     ->label('部門')
                     ->searchable(),
