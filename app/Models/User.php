@@ -54,4 +54,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasRole(Role::all());
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

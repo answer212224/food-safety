@@ -20,4 +20,9 @@ class Restaurant extends Model
     {
         return $this->hasMany(RestaurantWorkspace::class);
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

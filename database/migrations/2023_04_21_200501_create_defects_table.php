@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('defects', function (Blueprint $table) {
             $table->id();
-            $table->string('category');
+            $table->string('group');
             $table->string('title');
+            $table->string('category');
             $table->string('description');
-            $table->integer('standard_score');
             $table->timestamps();
         });
     }

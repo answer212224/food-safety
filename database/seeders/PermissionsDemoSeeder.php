@@ -68,19 +68,37 @@ class PermissionsDemoSeeder extends Seeder
         // Create Users and Assign Roles
         $user = \App\Models\User::factory()->create([
             'uid' => '001001001',
-            'name' => '菜B八',
+            'name' => '菜B 1號',
+        ]);
+        $user->assignRole($auditor);
+
+        $user = \App\Models\User::factory()->create([
+            'uid' => '001001002',
+            'name' => '菜B 2號',
+        ]);
+        $user->assignRole($auditor);
+
+        $user = \App\Models\User::factory()->create([
+            'uid' => '001001003',
+            'name' => '菜B 3號',
         ]);
         $user->assignRole($auditor);
 
         $user = \App\Models\User::factory()->create([
             'uid' => '001001',
-            'name' => '小菜',
+            'name' => '主管 01',
+        ]);
+        $user->assignRole($admin);
+
+        $user = \App\Models\User::factory()->create([
+            'uid' => '001002',
+            'name' => '主管 02',
         ]);
         $user->assignRole($admin);
 
         $user = \App\Models\User::factory()->create([
             'uid' => '001',
-            'name' => '老屁股',
+            'name' => '最高主管',
         ]);
         $user->assignRole($superAdmin);
     }

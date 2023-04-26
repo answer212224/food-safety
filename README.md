@@ -37,6 +37,8 @@ php artisan make:filament-resource ModelName --simple
 php artisan make:filament-resource ModelName
 php artisan make:filament-relation-manager RoleResource permissions name
 php artisan make:filament-resource ModelName --generate
+php artisan make:filament-page Settings
+php artisan make:filament-widget CustomerOverview --resource=CustomerResource
 ```
 
 ```php
