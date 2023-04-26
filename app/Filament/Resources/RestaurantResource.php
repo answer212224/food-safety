@@ -29,10 +29,7 @@ class RestaurantResource extends Resource
                 Card::make()->schema([
                     Forms\Components\TextInput::make('sid')
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('brand')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('shop')
+                    Forms\Components\TextInput::make('name')
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('address')
@@ -47,12 +44,17 @@ class RestaurantResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sid'),
-                Tables\Columns\TextColumn::make('brand'),
-                Tables\Columns\TextColumn::make('shop'),
-                Tables\Columns\TextColumn::make('address'),
-                Tables\Columns\TextColumn::make('location'),
+                Tables\Columns\TextColumn::make('sid')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('address')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('location')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->sortable()
                     ->date(),
             ])
             ->filters([

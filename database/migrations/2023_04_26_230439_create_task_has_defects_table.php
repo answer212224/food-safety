@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('task_defects', function (Blueprint $table) {
+        Schema::create('task_has_defects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id');
+            $table->foreignId('restaurant_workspace_id');
             $table->foreignId('defect_id');
             $table->json('images')->nullable();
-            $table->integer('score')->nullable();
-            $table->integer('status')->default(0);
+            $table->boolean('is_improved')->default(false);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('task_defects');
+        Schema::dropIfExists('task_has_defects');
     }
 };

@@ -4,14 +4,18 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\Task;
+use App\Models\User;
 use Filament\Tables;
+use App\Models\Restaurant;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TaskResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TaskResource\RelationManagers;
+use App\Filament\Resources\TaskResource\RelationManagers\TaskHasDefectsRelationManager;
 
 class TaskResource extends Resource
 {
@@ -25,21 +29,14 @@ class TaskResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required(),
-                Forms\Components\TextInput::make('restaurant_id')
-                    ->required(),
-                Forms\Components\TextInput::make('category')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('task_date')
-                    ->required(),
-                Forms\Components\Toggle::make('is_completed')
-                    ->required(),
-                Forms\Components\TextInput::make('inner_manager')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('outer_manager')
-                    ->maxLength(255),
+                Card::make()->schema([
+                    Forms\Components\TextInput::make('inner_manager')
+                        ->label('內場主管')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('outer_manager')
+                        ->label('外場主管')
+                        ->maxLength(255),
+                ])
             ]);
     }
 
@@ -47,14 +44,17 @@ class TaskResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->sortable()
+                    ->label('ID'),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('稽查員'),
-                Tables\Columns\TextColumn::make('restaurant.brand')
-                    ->label('品牌'),
-                Tables\Columns\TextColumn::make('restaurant.shop')
-                    ->label('店號'),
-                Tables\Columns\TextColumn::make('category'),
+                Tables\Columns\TextColumn::make('category')
+                    ->label('分類'),
+                Tables\Columns\TextColumn::make('restaurant.name')
+                    ->label('門市'),
                 Tables\Columns\TextColumn::make('task_date')
+                    ->label('稽查日期')
                     ->date(),
                 Tables\Columns\IconColumn::make('is_completed')
                     ->boolean(),
@@ -74,13 +74,15 @@ class TaskResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                // Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            TaskHasDefectsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

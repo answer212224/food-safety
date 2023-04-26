@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Task;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Gate;
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         Permission::class => \App\Policies\PermissionPolicy::class,
         Role::class => \App\Policies\RolePolicy::class,
         User::class => \App\Policies\UserPolicy::class,
+        Task::class => \App\Policies\TaskPolicy::class,
     ];
 
     /**

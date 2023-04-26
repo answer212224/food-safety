@@ -21,4 +21,9 @@ class Task extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+
+    public function taskHasDefects()
+    {
+        return $this->hasMany(TaskHasDefect::class);
+    }
 }
