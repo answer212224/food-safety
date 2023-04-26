@@ -70,4 +70,5 @@ php artisan make:filament-widget CustomerOverview --resource=CustomerResource
 
 - [laravel-permission](https://spatie.be/docs/laravel-permission/v5/introduction)
 - [tailwindcss](https://tailwindcss.com/)
+- [CalendarWidget](https://github.com/saade/filament-fullcalendar)
 

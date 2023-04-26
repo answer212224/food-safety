@@ -15,9 +15,11 @@ use App\Filament\Resources\TaskResource\RelationManagers;
 
 class TaskResource extends Resource
 {
+    protected static ?string $label = '稽核任務';
+
     protected static ?string $model = Task::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
     public static function form(Form $form): Form
     {

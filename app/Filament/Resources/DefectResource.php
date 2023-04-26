@@ -19,7 +19,7 @@ class DefectResource extends Resource
 
     protected static ?string $label = '缺失';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-thumb-down';
 
     public static function form(Form $form): Form
     {
