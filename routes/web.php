@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PlayGroundController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
@@ -19,6 +20,8 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/playground/{record}', [PlayGroundController::class, 'index']);
 
 // dashboard after login
 Route::get('/dashboard', function () {

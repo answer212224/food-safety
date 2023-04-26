@@ -71,7 +71,7 @@ class RoleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // RelationManagers\PermissionsRelationManager::class,
+            RelationManagers\PermissionsRelationManager::class,
         ];
     }
 
@@ -79,8 +79,8 @@ class RoleResource extends Resource
     {
         return [
             'index' => Pages\ListRoles::route('/'),
-            // 'create' => Pages\CreateRole::route('/create'),
-            // 'edit' => Pages\EditRole::route('/{record}/edit'),
+            'create' => Pages\CreateRole::route('/create'),
+            'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
     }
 }
