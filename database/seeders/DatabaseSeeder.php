@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Meal;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RestaurantSeeder::class,
             DefectSeeder::class,
             TaskSeeder::class,
+            MealSeeder::class,
         ]);
     }
 }
