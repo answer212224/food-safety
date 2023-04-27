@@ -6,13 +6,14 @@ use Filament\Forms;
 use App\Models\Task;
 use App\Models\User;
 use Filament\Tables;
-use Filament\Resources\Form;
+use App\Models\Defect;
 
+use Filament\Resources\Form;
 use Filament\Resources\Table;
+
 use App\Models\RestaurantWorkspace;
 
 use Filament\Forms\Components\Select;
-
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
@@ -33,28 +34,41 @@ class TaskHasDefectsRelationManager extends RelationManager
 
         return $form
             ->schema([
-                // FileUpload::make('image_0')->image()->directory('food-safety'),
-                // FileUpload::make('image_1')->image()->directory('food-safety'),
-                // Select::make('defect_id')
-                //     ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
-                //     ->required(),
                 Wizard::make([
                     Wizard\Step::make('IMG')
                         ->description('必須至少上傳一張照片')
                         ->schema([
-                            FileUpload::make('images')->image()->directory('food-safety')->multiple()->required(),
-                        ]),
-                    Wizard\Step::make('Group')
-                        ->description('必須選擇一個群組')
-                        ->schema([
-                            Select::make('defect_id')
-                                ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
+                            FileUpload::make('images')
+                                ->image()
+                                ->directory('food-safety')
+                                ->multiple()
                                 ->required(),
                         ]),
-                    Wizard\Step::make('Billing')
+                    Wizard\Step::make('Group')
+                        ->description('選擇一個符合的群組')
+                        ->schema([
+                            Select::make('group')
+                                ->options(\App\Models\Defect::getDistinctGroups()->pluck('group', 'group'))
+                                ->reactive(),
+                        ]),
+                    Wizard\Step::make('Title')
+                        ->description('選擇一個符合的標題')
+                        ->schema([
+                            Select::make('title')
+                                ->options(function (callable $get) {
+                                    $title = Defect::getDistinctTitlesByGroup($get('group'));
+                                    return $title->pluck('title', 'title');
+                                })
+                                ->reactive(),
+                        ]),
+                    Wizard\Step::make('Description')
+                        ->description('選擇一個符合的描述')
                         ->schema([
                             Select::make('defect_id')
-                                ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
+                                ->options(function (callable $get) {
+                                    $description = Defect::getDistinctDescriptionBytitle($get('title'));
+                                    return $description->pluck('description', 'id');
+                                })
                                 ->required(),
                         ]),
                 ])

@@ -11,6 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Toggle;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TaskResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -32,10 +33,14 @@ class TaskResource extends Resource
                 Card::make()->schema([
                     Forms\Components\TextInput::make('inner_manager')
                         ->label('內場主管')
+                        ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('outer_manager')
                         ->label('外場主管')
+                        ->required()
                         ->maxLength(255),
+                    Toggle::make('is_completed')
+                        ->label('是否完成')
                 ])
             ]);
     }

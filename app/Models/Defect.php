@@ -10,4 +10,24 @@ class Defect extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function taskHasDefects()
+    {
+        return $this->hasMany(TaskHasDefect::class);
+    }
+
+    public static function getDistinctGroups()
+    {
+        return self::select('group')->distinct()->get();
+    }
+
+    public static function getDistinctTitlesByGroup($group)
+    {
+        return self::where('group', $group)->select('title')->distinct()->get();
+    }
+
+    public static function getDistinctDescriptionBytitle($title)
+    {
+        return self::where('title', $title)->get();
+    }
 }
