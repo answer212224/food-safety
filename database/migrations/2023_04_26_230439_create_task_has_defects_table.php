@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('task_id');
             $table->foreignId('defect_id');
-            $table->string('image_0')->nullable();
-            $table->string('image_1')->nullable();
+            $table->string('images')->nullable();
             $table->boolean('is_improved')->default(false);
             $table->timestamps();
         });

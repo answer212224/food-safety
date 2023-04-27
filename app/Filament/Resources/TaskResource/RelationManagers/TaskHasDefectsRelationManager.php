@@ -42,8 +42,7 @@ class TaskHasDefectsRelationManager extends RelationManager
                     Wizard\Step::make('IMG')
                         ->description('必須至少上傳一張照片')
                         ->schema([
-                            FileUpload::make('image_0')->image()->directory('food-safety')->required(),
-                            FileUpload::make('image_1')->image()->directory('food-safety'),
+                            FileUpload::make('images')->image()->directory('food-safety')->multiple()->required(),
                         ]),
                     Wizard\Step::make('Group')
                         ->description('必須選擇一個群組')
