@@ -14,7 +14,6 @@ use App\Models\RestaurantWorkspace;
 use Filament\Forms\Components\Select;
 
 use Filament\Forms\Components\FileUpload;
-
 use Filament\Tables\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -33,23 +32,27 @@ class TaskHasDefectsRelationManager extends RelationManager
 
         return $form
             ->schema([
+                FileUpload::make('image_0')->image()->directory('food-safety'),
+                FileUpload::make('image_1')->image()->directory('food-safety'),
                 Select::make('defect_id')
                     ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
                     ->required(),
-                FileUpload::make('image_0')->image()->directory('form-attachments'),
-                FileUpload::make('image_1')->image()->directory('form-attachments'),
-                TextInput::make('score')->fill('task.score'),
             ]);
     }
-
 
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('defect.category'),
+                Tables\Columns\TextColumn::make('defect.group')
+                    ->label('缺失群組'),
+                Tables\Columns\TextColumn::make('defect.title')
+                    ->label('缺失項目'),
+                Tables\Columns\IconColumn::make('is_improved')
+                    ->boolean(),
             ])
+
             ->filters([
                 //
             ])

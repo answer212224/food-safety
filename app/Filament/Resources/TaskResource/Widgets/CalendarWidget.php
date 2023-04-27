@@ -23,7 +23,7 @@ class CalendarWidget extends FullCalendarWidget
         $tasks = Task::all();
 
         $tasks->transform(function ($task) {
-            $task->title = $task->category;
+            $task->title = $task->restaurant->name . '-' . $task->user->name . '-' . $task->category;
             $task->start = $task->task_date;
             return $task;
         });
@@ -46,6 +46,7 @@ class CalendarWidget extends FullCalendarWidget
 
     public function onEventClick($event): void
     {
+
         parent::onEventClick($event);
     }
 
@@ -77,17 +78,41 @@ class CalendarWidget extends FullCalendarWidget
         ];
     }
 
-    // protected static function getEditEventFormSchema(): array
-    // {
-    //     return [
-    //         Forms\Components\TextInput::make('title')
-    //             ->required(),
-    //         Forms\Components\DatePicker::make('start')
-    //             ->required(),
-    //         Forms\Components\DatePicker::make('end')
-    //             ->default(null),
-    //     ];
-    // }
+    public function resolveEventRecord(array $data): Model
+    {
+        // Using Appointment class as example
+        // return Task::find($data['id']);
+        dd(Task::find($data['id']));
+    }
+
+
+    protected static function getEditEventFormSchema(): array
+    {
+        return [
+            Select::make('category')
+                ->label('分類')
+                ->options([
+                    '食安及S5巡檢' => '食安及S5巡檢',
+                    '清潔檢查' => '清潔檢查',
+                    '餐點採樣' => '餐點採樣',
+                    '專案查核' => '專案查核',
+                ])
+                ->required(),
+            Select::make('restaurant_id')
+                ->label('門市')
+                ->options(Restaurant::all()->pluck('name', 'id'))
+                ->searchable()
+                ->required(),
+            Select::make('user_id')
+                ->label('稽核員')
+                ->multiple()
+                ->options(User::whereHas('roles', fn (Builder $query) => $query->where('name', 'auditor'))->get()->pluck('name', 'id'))
+                ->required(),
+            DatePicker::make('task_date')
+                ->label('稽核日期')
+                ->required(),
+        ];
+    }
 
     public static function canCreate(): bool
     {
