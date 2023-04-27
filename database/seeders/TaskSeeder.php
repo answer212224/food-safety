@@ -24,7 +24,7 @@ class TaskSeeder extends Seeder
         ]);
 
         User::find(2)->tasks()->create([
-            'restaurant_id' => 2,
+            'restaurant_id' => 1,
             'category' => '清潔檢查',
             'task_date' => now()->addDays(3),
             'is_completed' => false,

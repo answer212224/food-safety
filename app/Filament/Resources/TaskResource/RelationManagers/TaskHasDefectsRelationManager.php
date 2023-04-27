@@ -2,50 +2,47 @@
 
 namespace App\Filament\Resources\TaskResource\RelationManagers;
 
-use App\Models\Defect;
-use App\Models\Task;
 use Filament\Forms;
+use App\Models\Task;
+use App\Models\User;
 use Filament\Tables;
 use Filament\Resources\Form;
+
 use Filament\Resources\Table;
-use Filament\Forms\Components\Hidden;
+use App\Models\RestaurantWorkspace;
+
 use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
+
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+use Filament\Tables\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-
+use Filament\Forms\Components\TextInput;
 
 class TaskHasDefectsRelationManager extends RelationManager
 {
     protected static string $relationship = 'taskHasDefects';
 
-    protected static ?string $recordTitleAttribute = 'defect_id';
+    protected static ?string $recordTitleAttribute = 'restaurant_id';
 
-
+    protected static ?string $label = '缺失紀錄';
 
     public static function form(Form $form): Form
     {
-        $record = request()->route()->parameter('record');
-
-        $task = Task::find($record)->load('restaurant.restaurant_workspaces');
 
         return $form
             ->schema([
-                Select::make('restaurant_workspace_id')
-                    ->options($task->restaurant->restaurant_workspaces->pluck('area', 'id'))
+                Select::make('defect_id')
+                    ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
                     ->required(),
-                // Select::make('defect_id')
-                //     ->options(Defect::pluck('category', 'id'))
-                //     ->preload()
-                //     ->required(),
-
-                FileUpload::make('images')->image()
+                FileUpload::make('image_0')->image()->directory('form-attachments'),
+                FileUpload::make('image_1')->image()->directory('form-attachments'),
+                TextInput::make('score')->fill('task.score'),
             ]);
     }
+
+
 
     public static function table(Table $table): Table
     {

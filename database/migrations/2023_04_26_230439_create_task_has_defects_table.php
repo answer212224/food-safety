@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('task_has_defects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id');
-            $table->foreignId('restaurant_workspace_id');
             $table->foreignId('defect_id');
-            $table->json('images')->nullable();
+            $table->string('image_0')->nullable();
+            $table->string('image_1')->nullable();
             $table->boolean('is_improved')->default(false);
             $table->timestamps();
         });
