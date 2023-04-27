@@ -13,11 +13,12 @@ use App\Models\RestaurantWorkspace;
 
 use Filament\Forms\Components\Select;
 
+use Filament\Forms\Components\Wizard;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\TextInput;
 
 class TaskHasDefectsRelationManager extends RelationManager
 {
@@ -32,11 +33,32 @@ class TaskHasDefectsRelationManager extends RelationManager
 
         return $form
             ->schema([
-                FileUpload::make('image_0')->image()->directory('food-safety'),
-                FileUpload::make('image_1')->image()->directory('food-safety'),
-                Select::make('defect_id')
-                    ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
-                    ->required(),
+                // FileUpload::make('image_0')->image()->directory('food-safety'),
+                // FileUpload::make('image_1')->image()->directory('food-safety'),
+                // Select::make('defect_id')
+                //     ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
+                //     ->required(),
+                Wizard::make([
+                    Wizard\Step::make('IMG')
+                        ->description('必須至少上傳一張照片')
+                        ->schema([
+                            FileUpload::make('image_0')->image()->directory('food-safety')->required(),
+                            FileUpload::make('image_1')->image()->directory('food-safety'),
+                        ]),
+                    Wizard\Step::make('Group')
+                        ->description('必須選擇一個群組')
+                        ->schema([
+                            Select::make('defect_id')
+                                ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
+                                ->required(),
+                        ]),
+                    Wizard\Step::make('Billing')
+                        ->schema([
+                            Select::make('defect_id')
+                                ->options(\App\Models\Defect::pluck('description', 'id')->toArray())
+                                ->required(),
+                        ]),
+                ])
             ]);
     }
 
