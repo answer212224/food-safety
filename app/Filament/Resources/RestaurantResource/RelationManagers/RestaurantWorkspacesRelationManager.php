@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RestaurantWorkspacesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'restaurant_workspaces';
+    protected static string $relationship = 'restaurantWorkspaces';
 
     protected static ?string $label = '區站';
 
