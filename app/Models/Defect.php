@@ -26,8 +26,8 @@ class Defect extends Model
         return self::where('group', $group)->select('title')->distinct()->get();
     }
 
-    public static function getDistinctDescriptionBytitle($title)
+    public static function getDescriptionWhereByGroupAndTitle($group, $title)
     {
-        return self::where('title', $title)->get();
+        return self::where('group', $group)->where('title', $title)->get();
     }
 }

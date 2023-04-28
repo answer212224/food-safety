@@ -31,7 +31,6 @@ class TaskHasDefectsRelationManager extends RelationManager
 
     public static function form(Form $form): Form
     {
-
         return $form
             ->schema([
                 Wizard::make([
@@ -49,7 +48,8 @@ class TaskHasDefectsRelationManager extends RelationManager
                         ->schema([
                             Select::make('group')
                                 ->options(\App\Models\Defect::getDistinctGroups()->pluck('group', 'group'))
-                                ->reactive(),
+                                ->reactive()
+                                ->required(),
                         ]),
                     Wizard\Step::make('Title')
                         ->description('選擇一個符合的標題')
@@ -59,14 +59,15 @@ class TaskHasDefectsRelationManager extends RelationManager
                                     $title = Defect::getDistinctTitlesByGroup($get('group'));
                                     return $title->pluck('title', 'title');
                                 })
-                                ->reactive(),
+                                ->reactive()
+                                ->required(),
                         ]),
                     Wizard\Step::make('Description')
                         ->description('選擇一個符合的描述')
                         ->schema([
                             Select::make('defect_id')
                                 ->options(function (callable $get) {
-                                    $description = Defect::getDistinctDescriptionBytitle($get('title'));
+                                    $description = Defect::getDescriptionWhereByGroupAndTitle($get('group'), $get('title'));
                                     return $description->pluck('description', 'id');
                                 })
                                 ->required(),
