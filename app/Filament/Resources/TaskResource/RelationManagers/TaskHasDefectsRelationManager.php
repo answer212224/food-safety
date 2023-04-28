@@ -2,24 +2,16 @@
 
 namespace App\Filament\Resources\TaskResource\RelationManagers;
 
-use Filament\Forms;
-use App\Models\Task;
-use App\Models\User;
+
 use Filament\Tables;
 use App\Models\Defect;
-
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-
-use App\Models\RestaurantWorkspace;
-
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
 
 class TaskHasDefectsRelationManager extends RelationManager
 {
@@ -31,6 +23,7 @@ class TaskHasDefectsRelationManager extends RelationManager
 
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
                 Wizard::make([
@@ -102,5 +95,16 @@ class TaskHasDefectsRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
+    }
+
+    protected function canCreate(): bool
+    {
+
+        if (auth()->user()->task) {
+            if (auth()->user()->task->task_date->isToday()) {
+                return $this->can('create');
+            }
+        }
+        return false;
     }
 }

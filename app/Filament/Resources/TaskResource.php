@@ -4,18 +4,16 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\Task;
-use App\Models\User;
 use Filament\Tables;
-use App\Models\Restaurant;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Toggle;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TaskResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\TaskResource\RelationManagers;
 use App\Filament\Resources\TaskResource\RelationManagers\TaskHasDefectsRelationManager;
 
 class TaskResource extends Resource
@@ -28,6 +26,7 @@ class TaskResource extends Resource
 
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
                 Card::make()->schema([
@@ -67,13 +66,24 @@ class TaskResource extends Resource
                     ->label('內場主管'),
                 Tables\Columns\TextColumn::make('outer_manager')
                     ->label('外場主管'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->date(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->date(),
+
             ])
             ->filters([
-                //
+                SelectFilter::make('user')->relationship('user', 'name')->default(auth()->user()->id),
+                Filter::make('task_date')
+                    ->default(now())
+                    ->form([
+                        Forms\Components\DatePicker::make('date')
+                            ->default(today())
+                            ->label('稽查日期'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['date'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('task_date', '<=', $date),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -82,6 +92,7 @@ class TaskResource extends Resource
                 // Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
+
 
     public static function getRelations(): array
     {
