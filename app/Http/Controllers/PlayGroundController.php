@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Defect;
 use Illuminate\Http\Request;
 
 class PlayGroundController extends Controller
@@ -11,10 +12,6 @@ class PlayGroundController extends Controller
 
     public function index()
     {
-        $record = request()->route()->parameter('record');
-
-        $task = Task::find($record)->load('restaurant.restaurant_workspaces');
-
-        dd($task->restaurant->restaurant_workspaces->pluck('area'));
+        dd(Defect::getDescriptionWhereByGroupAndTitle('重大缺失', '食材過期')->pluck('description', 'id'));
     }
 }
