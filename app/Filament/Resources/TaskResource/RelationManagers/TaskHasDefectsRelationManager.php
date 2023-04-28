@@ -27,14 +27,16 @@ class TaskHasDefectsRelationManager extends RelationManager
         return $form
             ->schema([
                 Wizard::make([
-                    Wizard\Step::make('IMG')
+                    Wizard\Step::make('IMGAGE')
                         ->description('必須至少上傳一張照片')
                         ->schema([
-                            FileUpload::make('images')
+                            FileUpload::make('image_0')
                                 ->image()
                                 ->directory('food-safety')
-                                ->multiple()
                                 ->required(),
+                            FileUpload::make('image_1')
+                                ->image()
+                                ->directory('food-safety'),
                         ]),
                     Wizard\Step::make('Group')
                         ->description('選擇一個符合的群組')
@@ -97,14 +99,14 @@ class TaskHasDefectsRelationManager extends RelationManager
             ]);
     }
 
-    protected function canCreate(): bool
-    {
-
-        if (auth()->user()->task) {
-            if (auth()->user()->task->task_date->isToday()) {
-                return $this->can('create');
-            }
-        }
-        return false;
-    }
+    // protected function canCreate(): bool
+    // {
+    //     dd(auth()->user()->with('task'));
+    //     if (auth()->user()->task) {
+    //         if (auth()->user()->task->task_date->isToday()) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 }

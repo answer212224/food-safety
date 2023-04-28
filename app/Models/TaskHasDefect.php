@@ -11,10 +11,6 @@ class TaskHasDefect extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'images' => 'array',
-    ];
-
     public function task()
     {
         return $this->belongsTo(Task::class);
