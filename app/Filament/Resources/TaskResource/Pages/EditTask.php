@@ -14,6 +14,10 @@ class EditTask extends EditRecord
 
     protected static string $view = 'filament.resources.task-resource.pages.task-has-defect-process';
 
+    protected function getRedirectUrl(): ?string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 
     protected function getActions(): array
     {

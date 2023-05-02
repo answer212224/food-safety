@@ -41,9 +41,11 @@ class TaskResource extends Resource
                         ->maxLength(255),
                     Select::make('status')
                         ->label('狀態')
+                        ->required()
                         ->options(
                             [
                                 '處理完畢' => '處理完畢',
+                                '處理中' => '處理中',
                                 '未處理' => '未處理'
                             ]
                         )
