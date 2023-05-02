@@ -21,11 +21,6 @@ class TaskHasDefect extends Model
         return $this->belongsTo(Defect::class);
     }
 
-    public function workSpace()
-    {
-        return $this->belongsTo(WorkSpace::class);
-    }
-
     public function restaurantWorkspace()
     {
         return $this->belongsTo(RestaurantWorkspace::class);

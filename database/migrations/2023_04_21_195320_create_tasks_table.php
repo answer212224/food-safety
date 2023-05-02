@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('restaurant_id');
             $table->string('category');
             $table->date('task_date');
-            $table->boolean('is_completed')->default(false);
+            $table->string('status')->default('未處理');
             $table->string('inner_manager')->nullable();
             $table->string('outer_manager')->nullable();
             $table->timestamps();

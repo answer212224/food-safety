@@ -60,8 +60,13 @@ class TaskResource extends Resource
                 Tables\Columns\TextColumn::make('task_date')
                     ->label('稽查日期')
                     ->date(),
-                Tables\Columns\IconColumn::make('is_completed')
-                    ->boolean(),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->colors([
+                        'primary',
+                        'danger' => '未處理',
+                        'warning' => '處理中',
+                        'success' => '處理完畢',
+                    ]),
                 Tables\Columns\TextColumn::make('inner_manager')
                     ->label('內場主管'),
                 Tables\Columns\TextColumn::make('outer_manager')

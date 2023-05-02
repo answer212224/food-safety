@@ -67,13 +67,13 @@ class CalendarWidget extends FullCalendarWidget
                 ->options(Restaurant::all()->pluck('name', 'id'))
                 ->searchable()
                 ->required(),
+            DatePicker::make('task_date')
+                ->label('稽核日期')
+                ->required(),
             Select::make('user_id')
                 ->label('稽核員')
                 ->multiple()
                 ->options(User::whereHas('roles', fn (Builder $query) => $query->where('name', 'auditor'))->get()->pluck('name', 'id'))
-                ->required(),
-            DatePicker::make('task_date')
-                ->label('稽核日期')
                 ->required(),
         ];
     }
