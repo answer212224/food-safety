@@ -62,7 +62,7 @@ class TaskHasDefectResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -81,7 +81,8 @@ class TaskHasDefectResource extends Resource
         return [
             'index' => Pages\ListTaskHasDefects::route('/'),
             'create' => Pages\CreateTaskHasDefect::route('/create'),
-            'edit' => Pages\EditTaskHasDefect::route('/{record}/edit'),
+            // 'edit' => Pages\EditTaskHasDefect::route('/{record}/edit'),
+
         ];
     }
 }

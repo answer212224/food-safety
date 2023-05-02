@@ -15,6 +15,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TaskResource\Pages;
 use App\Filament\Resources\TaskResource\RelationManagers\TaskHasDefectsRelationManager;
+use Filament\Forms\Components\Select;
 
 class TaskResource extends Resource
 {
@@ -38,8 +39,14 @@ class TaskResource extends Resource
                         ->label('外場主管')
                         ->required()
                         ->maxLength(255),
-                    Toggle::make('is_completed')
-                        ->label('是否完成')
+                    Select::make('status')
+                        ->label('狀態')
+                        ->options(
+                            [
+                                '處理完畢' => '處理完畢',
+                                '未處理' => '未處理'
+                            ]
+                        )
                 ])
             ]);
     }
@@ -61,6 +68,7 @@ class TaskResource extends Resource
                     ->label('稽查日期')
                     ->date(),
                 Tables\Columns\BadgeColumn::make('status')
+                    ->label('狀態')
                     ->colors([
                         'primary',
                         'danger' => '未處理',

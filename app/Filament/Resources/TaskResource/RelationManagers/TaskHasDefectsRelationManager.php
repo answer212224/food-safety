@@ -80,10 +80,11 @@ class TaskHasDefectsRelationManager extends RelationManager
 
     public static function table(Table $table): Table
     {
-        return $table
+        return
+            $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image_0'),
-                Tables\Columns\ImageColumn::make('image_1'),
+                Tables\Columns\ImageColumn::make('image_0')->size(300),
+                Tables\Columns\ImageColumn::make('image_1')->size(300),
                 Tables\Columns\TextColumn::make('restaurantWorkspace.area')
                     ->label('區站'),
                 Tables\Columns\TextColumn::make('defect.group')
@@ -92,8 +93,11 @@ class TaskHasDefectsRelationManager extends RelationManager
                     ->label('缺失項目'),
                 Tables\Columns\TextColumn::make('defect.description')
                     ->label('缺失項目'),
-                Tables\Columns\IconColumn::make('is_improved')
-                    ->boolean(),
+            ])
+
+            ->contentGrid([
+                'md' => 2,
+                'xl' => 3,
             ])
 
             ->filters([
