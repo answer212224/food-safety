@@ -17,7 +17,9 @@ class TaskHasDefectResource extends Resource
 {
     protected static ?string $model = TaskHasDefect::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $label = '缺失一覽';
+
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-check';
 
     public static function form(Form $form): Form
     {

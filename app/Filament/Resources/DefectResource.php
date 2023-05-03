@@ -19,7 +19,7 @@ class DefectResource extends Resource
 {
     protected static ?string $model = Defect::class;
 
-    protected static ?string $label = '缺失';
+    protected static ?string $label = '缺失列表';
 
     protected static ?string $navigationIcon = 'heroicon-o-thumb-down';
 

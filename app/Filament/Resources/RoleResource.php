@@ -19,7 +19,7 @@ use App\Filament\Resources\RoleResource\RelationManagers;
 
 class RoleResource extends Resource
 {
-    protected static ?string $label = '角色';
+    protected static ?string $label = '角色設定';
 
     protected static ?string $model = Role::class;
 
