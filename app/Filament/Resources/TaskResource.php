@@ -64,8 +64,10 @@ class TaskResource extends Resource
                     ->label('稽查員'),
                 Tables\Columns\TextColumn::make('category')
                     ->label('分類'),
-                Tables\Columns\TextColumn::make('restaurant.name')
-                    ->label('門市'),
+                Tables\Columns\TextColumn::make('restaurant.brand')
+                    ->label('品牌'),
+                Tables\Columns\TextColumn::make('restaurant.shop')
+                    ->label('分店'),
                 Tables\Columns\TextColumn::make('task_date')
                     ->label('稽查日期')
                     ->date(),

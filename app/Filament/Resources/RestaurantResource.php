@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RestaurantResource extends Resource
 {
-    protected static ?string $label = '餐廳';
+    protected static ?string $label = '餐廳一覽';
 
     protected static ?string $model = Restaurant::class;
 
@@ -29,7 +29,10 @@ class RestaurantResource extends Resource
                 Card::make()->schema([
                     Forms\Components\TextInput::make('sid')
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('name')
+                    Forms\Components\TextInput::make('brand')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('shop')
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('address')
@@ -46,7 +49,10 @@ class RestaurantResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('sid')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('brand')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('shop')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
