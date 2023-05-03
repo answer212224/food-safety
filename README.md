@@ -41,6 +41,7 @@ php artisan make:filament-page Settings
 php artisan make:filament-widget CustomerOverview --resource=CustomerResource
 php artisan make:filament-page SortUsers --resource=UserResource --type=custom
 php artisan make:filament-relation-manager CategoryResource posts title --attach
+php artisan make:filament-page ViewUser --resource=UserResource --type=ViewRecord
 
 ```
 

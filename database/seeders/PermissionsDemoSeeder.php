@@ -88,6 +88,7 @@ class PermissionsDemoSeeder extends Seeder
         $auditor->givePermissionTo([
             'viewAny: tasks',
             'update: tasks',
+            'view: tasks',
             'viewAny: task_has_defects',
             'create: task_has_defects',
             'update: task_has_defects',
