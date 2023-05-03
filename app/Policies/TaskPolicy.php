@@ -13,15 +13,14 @@ class TaskPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasAnyRole(['admin', 'auditor']);
+        return $user->hasPermissionTo('viewAny: tasks');
     }
-
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Task $task): bool
     {
-        return $user->id == $task->user_id;
+        return $user->hasPermissionTo('view: tasks');
     }
 
     /**
@@ -29,7 +28,7 @@ class TaskPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('create: tasks');
     }
 
     /**
@@ -37,7 +36,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-        return $user->id == $task->user_id || $user->hasAnyRole(['admin']);
+        return $user->hasPermissionTo('update: tasks');
     }
 
     /**
@@ -45,6 +44,6 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-        return $user->hasAnyRole(['admin']);
+        return $user->hasPermissionTo('delete: tasks');
     }
 }

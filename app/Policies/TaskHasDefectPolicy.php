@@ -13,7 +13,7 @@ class TaskHasDefectPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasAnyRole(['admin', 'auditor']);
+        return $user->hasPermissionTo('viewAny: task_has_defects');
     }
 
     /**
@@ -21,7 +21,7 @@ class TaskHasDefectPolicy
      */
     public function view(User $user, TaskHasDefect $taskHasDefect): bool
     {
-        return $user->id == $taskHasDefect->task->user_id;
+        return $user->hasPermissionTo('view: task_has_defects');
     }
 
     /**
@@ -29,7 +29,7 @@ class TaskHasDefectPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermissionTo('create: task_has_defects');
     }
 
     /**
@@ -37,7 +37,7 @@ class TaskHasDefectPolicy
      */
     public function update(User $user, TaskHasDefect $taskHasDefect): bool
     {
-        return $user->id == $taskHasDefect->task->user_id;
+        return $user->hasPermissionTo('update: task_has_defects');
     }
 
     /**
@@ -45,6 +45,6 @@ class TaskHasDefectPolicy
      */
     public function delete(User $user, TaskHasDefect $taskHasDefect): bool
     {
-        return $user->id == $taskHasDefect->task->user_id;
+        return $user->hasPermissionTo('delete: task_has_defects');
     }
 }

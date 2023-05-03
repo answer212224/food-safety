@@ -13,7 +13,7 @@ class DefectPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasAnyRole(['admin', 'auditor']);
+        return $user->hasPermissionTo('viewAny: defects');
     }
 
     /**
@@ -21,7 +21,7 @@ class DefectPolicy
      */
     public function view(User $user, Defect $defect): bool
     {
-        return $user->hasAnyRole(['admin', 'auditor']);
+        return $user->hasPermissionTo('view: defects');
     }
 
     /**
@@ -29,7 +29,7 @@ class DefectPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasAnyRole(['admin']);
+        return $user->hasPermissionTo('create: defects');
     }
 
     /**
@@ -37,7 +37,7 @@ class DefectPolicy
      */
     public function update(User $user, Defect $defect): bool
     {
-        return $user->hasAnyRole(['admin']);
+        return $user->hasPermissionTo('update: defects');
     }
 
     /**
@@ -45,6 +45,6 @@ class DefectPolicy
      */
     public function delete(User $user, Defect $defect): bool
     {
-        return $user->hasAnyRole(['admin']);
+        return $user->hasPermissionTo('delete: defects');
     }
 }
