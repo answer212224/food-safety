@@ -12,7 +12,7 @@ class EditTask extends EditRecord
 
     // resources\views\filament\resources\task-resource\pages\task-has-defect-process.blade.php
 
-    protected static string $view = 'filament.resources.task-resource.pages.task-has-defect-process';
+    // protected static string $view = 'filament.resources.task-resource.pages.task-has-defect-process';
 
     protected function getRedirectUrl(): ?string
     {

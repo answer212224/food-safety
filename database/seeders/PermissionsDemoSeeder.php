@@ -87,6 +87,10 @@ class PermissionsDemoSeeder extends Seeder
         $auditor = Role::create(['name' => 'auditor']);
         $auditor->givePermissionTo([
             'viewAny: tasks',
+            'update: tasks',
+            'viewAny: task_has_defects',
+            'create: task_has_defects',
+            'update: task_has_defects',
         ]);
 
 
