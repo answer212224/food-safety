@@ -9,13 +9,18 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
 use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TaskResource\Pages;
+use Filament\Resources\RelationManagers\RelationGroup;
+use App\Filament\Resources\TaskResource\RelationManagers\TaskuserRelationManager;
 use App\Filament\Resources\TaskResource\RelationManagers\TaskHasDefectsRelationManager;
-use Filament\Forms\Components\Select;
+
 
 class TaskResource extends Resource
 {
@@ -23,7 +28,7 @@ class TaskResource extends Resource
 
     protected static ?string $model = Task::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-check';
 
     public static function form(Form $form): Form
     {
@@ -31,25 +36,32 @@ class TaskResource extends Resource
         return $form
             ->schema([
                 Card::make()->schema([
-                    Forms\Components\TextInput::make('inner_manager')
-                        ->label('內場主管')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('outer_manager')
-                        ->label('外場主管')
-                        ->required()
-                        ->maxLength(255),
-                    Select::make('status')
-                        ->label('狀態')
-                        ->required()
-                        ->options(
-                            [
-                                '處理完畢' => '處理完畢',
-                                '處理中' => '處理中',
-                                '未處理' => '未處理'
-                            ]
-                        )
-                ])
+                    Grid::make(3)
+                        ->schema([
+                            Forms\Components\TextInput::make('category')
+                                ->label('稽核分類')
+                                ->disabled(),
+                            DatePicker::make('task_date')
+                                ->label('稽核日期')
+                                ->disabled(),
+                            Select::make('restaurant_id')
+                                ->label('稽核品牌')
+                                ->disabled()
+                                ->relationship('restaurant', 'brand'),
+                            Select::make('restaurant_id')
+                                ->label('稽核分店')
+                                ->disabled()
+                                ->relationship('restaurant', 'shop'),
+                            Forms\Components\TextInput::make('inner_manager')
+                                ->label('內場主管')
+                                ->required()
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('outer_manager')
+                                ->label('外場主管')
+                                ->required()
+                                ->maxLength(255),
+                        ])
+                ]),
             ]);
     }
 
@@ -60,8 +72,6 @@ class TaskResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->sortable()
                     ->label('ID'),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('稽查員'),
                 Tables\Columns\TextColumn::make('category')
                     ->label('分類'),
                 Tables\Columns\TextColumn::make('restaurant.brand')
@@ -79,28 +89,26 @@ class TaskResource extends Resource
                         'warning' => '處理中',
                         'success' => '處理完畢',
                     ]),
-                Tables\Columns\TextColumn::make('inner_manager')
-                    ->label('內場主管'),
-                Tables\Columns\TextColumn::make('outer_manager')
-                    ->label('外場主管'),
+                Tables\Columns\TagsColumn::make('users.name')
+                    ->label('稽核員'),
 
             ])
             ->filters([
-                SelectFilter::make('user')->relationship('user', 'name')->default(auth()->user()->id),
-                Filter::make('task_date')
-                    ->default(now())
-                    ->form([
-                        Forms\Components\DatePicker::make('date')
-                            ->default(today())
-                            ->label('稽查日期'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('task_date', '<=', $date),
-                            );
-                    }),
+                // SelectFilter::make('user')->relationship('user', 'name')->default(auth()->user()->id),
+                // Filter::make('task_date')
+                //     ->default(now())
+                //     ->form([
+                //         Forms\Components\DatePicker::make('date')
+                //             ->default(today())
+                //             ->label('稽查日期'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['date'],
+                //                 fn (Builder $query, $date): Builder => $query->whereDate('task_date', '<=', $date),
+                //             );
+                //     }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -113,8 +121,13 @@ class TaskResource extends Resource
 
     public static function getRelations(): array
     {
+
         return [
-            TaskHasDefectsRelationManager::class,
+            RelationGroup::make('任務相關', [
+                TaskHasDefectsRelationManager::class,
+                TaskuserRelationManager::class,
+            ]),
+
         ];
     }
 

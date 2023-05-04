@@ -15,9 +15,7 @@
     @endif
 
     @if (count($relationManagers))
-        @if (!$this->hasCombinedRelationManagerTabsWithForm())
-            <x-filament::hr />
-        @endif
+
 
         <x-filament::resources.relation-managers :active-manager="$activeRelationManager" :form-tab-label="$this->getFormTabLabel()" :managers="$relationManagers" :owner-record="$record"
             :page-class="static::class">
@@ -27,8 +25,9 @@
                 </x-slot>
             @endif
         </x-filament::resources.relation-managers>
-    @endif
 
+    @endif
+    <x-filament::hr />
     <x-filament::form wire:submit.prevent="save">
         {{ $this->form }}
 

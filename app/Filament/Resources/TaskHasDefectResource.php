@@ -19,7 +19,7 @@ class TaskHasDefectResource extends Resource
 
     protected static ?string $label = '缺失一覽';
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-check';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
 
     public static function form(Form $form): Form
     {
