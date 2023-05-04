@@ -2,15 +2,18 @@
 
 namespace App\Filament\Resources\TaskResource\RelationManagers;
 
+use App\Models\Task;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\TaskUser;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
-use Illuminate\Support\Facades\Auth;
 
 class TaskuserRelationManager extends RelationManager
 {
@@ -33,16 +36,14 @@ class TaskuserRelationManager extends RelationManager
 
     public static function table(Table $table): Table
     {
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('姓名'),
-                Tables\Columns\ToggleColumn::make('is_completed')
+                Tables\Columns\IconColumn::make('is_completed')
                     ->label('是否完成')
-                    ->updateStateUsing(function ($record, $state) {
-                        $record->is_completed = $state;
-                        $record->save();
-                    }),
+                    ->boolean()
             ])
             ->filters([
                 //
@@ -51,7 +52,7 @@ class TaskuserRelationManager extends RelationManager
                 // Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

@@ -32,7 +32,6 @@ class TaskResource extends Resource
 
     public static function form(Form $form): Form
     {
-
         return $form
             ->schema([
                 Card::make()->schema([
@@ -60,6 +59,10 @@ class TaskResource extends Resource
                                 ->label('外場主管')
                                 ->required()
                                 ->maxLength(255),
+
+                            Forms\Components\TextInput::make('total')
+                                ->label('總分')
+                                ->disabled(),
                         ])
                 ]),
             ]);
@@ -81,6 +84,8 @@ class TaskResource extends Resource
                 Tables\Columns\TextColumn::make('task_date')
                     ->label('稽查日期')
                     ->date(),
+                Tables\Columns\TextColumn::make('total')
+                    ->label('目前總分'),
                 Tables\Columns\BadgeColumn::make('status')
                     ->label('狀態')
                     ->colors([

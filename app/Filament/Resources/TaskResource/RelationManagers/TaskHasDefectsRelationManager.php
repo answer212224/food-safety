@@ -47,7 +47,8 @@ class TaskHasDefectsRelationManager extends RelationManager
                                     return $livewire->ownerRecord->restaurant->restaurantWorkspaces
                                         ->pluck('area', 'id')
                                         ->toArray();
-                                }),
+                                })
+                                ->required(),
                         ]),
                     Wizard\Step::make('Group')
                         ->description('選擇一個符合的缺失')
