@@ -13,6 +13,10 @@ class PlayGroundController extends Controller
     public function index()
     {
         // dd(Defect::getDescriptionWhereByGroupAndTitle('重大缺失', '食材過期')->pluck('description', 'id'));
-        dd(Task::find(1)->restaurant->restaurantWorkspaces->pluck('area', 'id')->toArray());
+        // dd(Task::find(1)->restaurant->restaurantWorkspaces->pluck('area', 'id')->toArray());
+        $category = Defect::find(1)->category;
+        dd($category);
+        $a = "重大缺失";
+        dd(config("score.$a"));
     }
 }

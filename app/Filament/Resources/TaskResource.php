@@ -94,21 +94,21 @@ class TaskResource extends Resource
 
             ])
             ->filters([
-                // SelectFilter::make('user')->relationship('user', 'name')->default(auth()->user()->id),
-                // Filter::make('task_date')
-                //     ->default(now())
-                //     ->form([
-                //         Forms\Components\DatePicker::make('date')
-                //             ->default(today())
-                //             ->label('稽查日期'),
-                //     ])
-                //     ->query(function (Builder $query, array $data): Builder {
-                //         return $query
-                //             ->when(
-                //                 $data['date'],
-                //                 fn (Builder $query, $date): Builder => $query->whereDate('task_date', '<=', $date),
-                //             );
-                //     }),
+                SelectFilter::make('users')->relationship('users', 'name')->default(auth()->user()->id),
+                Filter::make('task_date')
+                    ->default(now())
+                    ->form([
+                        Forms\Components\DatePicker::make('date')
+                            ->default(today())
+                            ->label('稽查日期'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['date'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('task_date', '<=', $date),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

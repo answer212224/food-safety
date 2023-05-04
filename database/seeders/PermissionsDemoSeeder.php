@@ -81,6 +81,12 @@ class PermissionsDemoSeeder extends Seeder
             'create: tasks',
             'update: tasks',
             'delete: tasks',
+
+            'viewAny: defects',
+            'view: defects',
+            'create: defects',
+            'update: defects',
+            'delete: defects',
         ]);
 
         // Create Auditor Role

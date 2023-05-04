@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('status')->default('未處理');
             $table->string('inner_manager')->nullable();
             $table->string('outer_manager')->nullable();
+            $table->integer('total')->default(100);
             $table->timestamps();
         });
     }

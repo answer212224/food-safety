@@ -25,7 +25,6 @@ class TaskHasDefectsRelationManager extends RelationManager
 
     public static function form(Form $form): Form
     {
-
         return $form
             ->schema([
                 Wizard::make([
@@ -105,9 +104,17 @@ class TaskHasDefectsRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()->using(function (HasRelationshipTable $livewire, array $data): Model {
+
+                    $category = Defect::find($data['defect_id'])->category;
+
+                    $score = config("score.$category");
+
+
                     $livewire->ownerRecord->update([
-                        'status' => '執行中',
+                        'status' => '處理中',
+                        'total' => $livewire->ownerRecord->total + $score,
                     ]);
+
                     return $livewire->getRelationship()->create($data);
                 }),
             ])
