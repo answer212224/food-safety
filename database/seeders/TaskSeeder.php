@@ -14,31 +14,5 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        User::find(1)->tasks()->create([
-            'restaurant_id' => 1,
-            'category' => '食安及5S巡檢',
-            'task_date' => today(),
-            'status' => '未處理',
-            'inner_manager' => '',
-            'outer_manager' => '',
-        ]);
-
-        User::find(2)->tasks()->create([
-            'restaurant_id' => 1,
-            'category' => '清潔檢查',
-            'task_date' => today()->addDays(3),
-            'status' => '未處理',
-            'inner_manager' => '',
-            'outer_manager' => '',
-        ]);
-
-        User::find(3)->tasks()->create([
-            'restaurant_id' => 3,
-            'category' => '餐點採樣',
-            'task_date' => today()->addDays(2),
-            'status' => '未處理',
-            'inner_manager' => '',
-            'outer_manager' => '',
-        ]);
     }
 }

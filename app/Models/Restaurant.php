@@ -25,4 +25,14 @@ class Restaurant extends Model
     {
         return $this->belongsTo(Task::class);
     }
+
+    public static function getDistinctBrands()
+    {
+        return self::select('brand')->distinct()->get();
+    }
+
+    public static function getWhereBrand($brand)
+    {
+        return self::where('brand', $brand)->get();
+    }
 }

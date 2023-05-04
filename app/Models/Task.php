@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Task extends Model
@@ -12,11 +13,6 @@ class Task extends Model
     use HasFactory;
 
     protected $guarded = [];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function restaurant(): BelongsTo
     {
@@ -31,5 +27,10 @@ class Task extends Model
     public function restaurantWorkSpaces(): HasManyThrough
     {
         return $this->hasManyThrough(RestaurantWorkspace::class, Restaurant::class);
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withPivot('is_completed')->withTimestamps();
     }
 }

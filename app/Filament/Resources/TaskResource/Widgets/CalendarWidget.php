@@ -23,7 +23,7 @@ class CalendarWidget extends FullCalendarWidget
         $tasks = Task::all();
 
         $tasks->transform(function ($task) {
-            $task->title = $task->restaurant->name . '-' . $task->user->name . '-' . $task->category;
+            $task->title = "{$task->restaurant->brand}{$task->restaurant->shop} {$task->category}";
             $task->start = $task->task_date;
             return $task;
         });
@@ -33,14 +33,14 @@ class CalendarWidget extends FullCalendarWidget
 
     public function createEvent(array $data): void
     {
-        foreach ($data['user_id'] as $user_id) {
-            Task::create([
-                'category' => $data['category'],
-                'restaurant_id' => $data['restaurant_id'],
-                'user_id' => $user_id,
-                'task_date' => $data['task_date'],
-            ]);
-        }
+        $task = Task::create([
+            'category' => $data['category'],
+            'restaurant_id' => $data['restaurant_id'],
+            'task_date' => $data['task_date'],
+        ]);
+
+        $task->users()->attach($data['user_id']);
+
         $this->refreshEvents();
     }
 
@@ -58,14 +58,19 @@ class CalendarWidget extends FullCalendarWidget
                 ->options([
                     '食安及S5巡檢' => '食安及S5巡檢',
                     '清潔檢查' => '清潔檢查',
-                    '餐點採樣' => '餐點採樣',
-                    '專案查核' => '專案查核',
                 ])
+                ->required(),
+            Select::make('brand')
+                ->label('品牌')
+                ->options(Restaurant::getDistinctBrands()->pluck('brand', 'brand'))
+                ->reactive()
                 ->required(),
             Select::make('restaurant_id')
                 ->label('門市')
-                ->options(Restaurant::all()->pluck('name', 'id'))
-                ->searchable()
+                ->options(function (callable $get) {
+                    $restaurand = Restaurant::getWhereBrand($get('brand'));
+                    return $restaurand->pluck('shop', 'id');
+                })
                 ->required(),
             DatePicker::make('task_date')
                 ->label('稽核日期')
@@ -82,7 +87,7 @@ class CalendarWidget extends FullCalendarWidget
     {
         // Using Appointment class as example
         // return Task::find($data['id']);
-        dd(Task::find($data['id']));
+        dd(Task::find($data['id'])->users);
     }
 
 
